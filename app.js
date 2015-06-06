@@ -1,14 +1,12 @@
 var path    = require('path'),
     Hapi = require('hapi'),
-    common  = require(path.join(__dirname, '/backend/common.js')),
-    routes = require(path.join(process.cwd(), '/backend/routes.js')),
-    config  = common.config();
+    routes = require(path.join(process.cwd(), '/backend/routes.js'));
 
 // Create a server with a host and port
 var server = new Hapi.Server();
 server.connection({
     host: '0.0.0.0',
-    port: config.port
+    port: process.env.PORT || 3000
 });
 
 // Setup Good config for Hapi
