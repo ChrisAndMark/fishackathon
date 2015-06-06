@@ -2,6 +2,7 @@ Vessel = require('../model').Vessel
 User = require('../model').User
 Claims = require('../model').Claims
 helper = require('../lib/helper')
+var _ = require('lodash');
 
 var createClaim = {
   method  : 'POST',
@@ -14,9 +15,12 @@ var createClaim = {
   handler : function (request, reply) {
 
     User.findOne({email: request.auth.credentials.user}, function(err, user) {
+      
+      species = request.payload.species; 
+      
       var claim = new Claims(); 
       claim.fisherygear = request.payload.fishing_gear;
-      claim.targetSpecies = request.payload.fishing_gear;
+      claim.targetSpecies = request.payload.targetSpecies;
       claim.datetime = request.payload.date_time; 
       claim.loc_long = request.payload.longtitude; 
       claim.loc_lat = request.payload.latitude; 

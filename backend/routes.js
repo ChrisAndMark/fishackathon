@@ -52,6 +52,7 @@ routes.push(userRoutes.updateUser);
 routes.push(vesselRoutes.createVessel);
 routes.push(vesselRoutes.updateVessel);
 routes.push(vesselRoutes.getVessels);
+routes.push(userRoutes.getUser);
 
 console.log(routes)
 module.exports = routes;

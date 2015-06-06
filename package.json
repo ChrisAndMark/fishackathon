@@ -33,7 +33,7 @@
     "jsonwebtoken": "^5.0.1",
     "mongodb": "^2.0.33",
     "mongoose": "^4.0.5",
-    "validator": "^3.40.0"
+    "validator": "^3.40.0",
     "lodash": "^3.9.3",
     "mongodb": "^2.0.33"
   },

@@ -39,5 +39,27 @@ var updateUser = {
   }
 };
 
+var getUser = {
+  method  : 'GET',
+  path    : '/api/v1/user',
+  config  : {
+    auth : {
+      strategy: 'token',
+    }
+  },
+  handler : function (request, reply){
+    User.findOne({email: request.auth.credentials.user}, function(err, user){
+      user_object = user.toObject();
+      delete user_object.password;
+      delete user_object.session;
+      delete user_object._id;
+      delete user_object.__v;
+      console.log(user_object);
+      reply(user_object);
+    }
+  )}
+};
 
-module.exports = {createUser: createUser, updateUser: updateUser}
+
+
+module.exports = {createUser: createUser, updateUser: updateUser, getUser: getUser}
