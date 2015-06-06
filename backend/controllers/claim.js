@@ -1,6 +1,7 @@
 Vessel = require('../model').Vessel
 User = require('../model').User
 Claims = require('../model').Claims
+Species = require('../model').Species
 helper = require('../lib/helper')
 var _ = require('lodash');
 
@@ -16,8 +17,15 @@ var createClaim = {
 
     User.findOne({email: request.auth.credentials.user}, function(err, user) {
       
-      species = request.payload.species; 
-      
+      speciesPayload = request.payload.species;
+      species = []
+
+      _(speciesPayload).forEach(function(n) {
+        var spec = new
+
+      }
+
+
       var claim = new Claims(); 
       claim.fisherygear = request.payload.fishing_gear;
       claim.targetSpecies = request.payload.targetSpecies;

@@ -2,6 +2,7 @@ var Mongoose   = require('mongoose');
 var Schema     = Mongoose.Schema;
 var validator  = require('validator');
 var bcrypt     = require('bcrypt');
+var uniqueValidator = require('mongoose-unique-validator');
 var SALT_WORK_FACTOR = 10;
 
 
@@ -60,7 +61,7 @@ var vesselSchema = new Schema({
 
 
 var userSchema = new Schema({
-  email         : { type: String, required: true, index: { unique: true }, validate: [ validator.isEmail, 'invalid email' ]  },
+  email         : { type: String, required: true, unique: true, validate: [ validator.isEmail, 'invalid email' ]  },
   password      : { type: String, required: true },
   fname         : { type: String, required: true, trim: true },
   lname         : { type: String, required: true, trim: true}, 
@@ -71,6 +72,8 @@ var userSchema = new Schema({
   vessels       : [vesselSchema],
   session       : { type: String, required: false }
 });
+
+userSchema.plugin(uniqueValidator);
 
 
 
@@ -113,6 +116,7 @@ userSchema.set('autoIndex', false);
 var user = Mongoose.model('user', userSchema, 'user');
 var vessel = Mongoose.model('vessel', vesselSchema, 'vessel')
 var claim = Mongoose.model('claims', claimSchema, 'claim')
+var species = Mongoose.model('species', speciesSchema, 'species' ) 
 
 module.exports = {
   User: user,

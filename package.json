@@ -31,11 +31,11 @@
     "hapi-auth-cookie": "~1.3.1",
     "hapi-auth-jwt": "^2.1.2",
     "jsonwebtoken": "^5.0.1",
+    "lodash": "^3.9.3",
     "mongodb": "^2.0.33",
     "mongoose": "^4.0.5",
-    "validator": "^3.40.0",
-    "lodash": "^3.9.3",
-    "mongodb": "^2.0.33"
+    "mongoose-unique-validator": "^0.4.1",
+    "validator": "^3.40.0"
   },
   "devDependencies": {
     "bower": "latest",
