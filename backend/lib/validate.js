@@ -1,8 +1,7 @@
 var User   = require('../model').User;
 
 var validate = function (decodedToken, callback) {
-
-    console.log(decodedToken);  // should be {accountId : 123}.
+     // should be {accountId : 123}.
 
     if (decodedToken) {
       console.log(decodedToken.toString());

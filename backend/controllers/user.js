@@ -23,10 +23,21 @@ var createUser = {
           reply(err);
       }
     })
+    }
+  };
+var updateUser = {
+  method  : ['POST', 'PUT'],
+  path    : '/api/v1/user/update',
+  config  : {
+    auth : {
+      strategy: 'token',
+    }
+  },
+  handler : function (request, reply){
+    console.log(request.headers)
+    reply(jwt.decode(request.headers))
   }
 };
 
-var updateUser = {
-  method  : ['POST', 'PUT'],
-  path    : '/api/v1/user/',
-};
+
+module.exports = {createUser: createUser, updateUser: updateUser}

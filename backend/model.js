@@ -111,8 +111,11 @@ userSchema.set('autoIndex', false);
 
 
 var user = Mongoose.model('user', userSchema);
-
+var vessel = Mongoose.model('vessel', vesselSchema)
+var claims = Mongoose.model('claims', claimSchema)
 
 module.exports = {
-  User: user
+  User: user,
+  Vessel: vessel, 
+  Claims: claims
 };

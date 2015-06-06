@@ -1,6 +1,19 @@
-var path    = require('path'),
-    Hapi = require('hapi'),
-    routes = require(path.join(process.cwd(), '/backend/routes.js'));
+var path        = require('path'),
+    Hapi        = require('hapi'),
+    boom        = require('boom'),
+    routes      = require(path.join(process.cwd(), '/backend/routes.js')),
+    config      = require('./config/config'),
+    validate    = require('./backend/lib/validate').validate,
+    jwt         = require('jsonwebtoken'),
+    Mongoose    = require('mongoose');
+
+Mongoose.connect(config.mongoUri, function(err, resp){
+  if (err) {
+    console.log ('ERROR connecting to: ' + config.mongoUri + '. ' + err);
+  } else {
+    console.log ('Succeeded connected to: ' + config.mongoUri);
+  }
+});
 
 // Create a server with a host and port
 var server = new Hapi.Server();
@@ -13,12 +26,27 @@ server.connection({
 var goodConfig = {
   register: require('good'),
   options: {
+    opsInterval: 1000,
     reporters: [{
       reporter: require('good-console'),
-      events: [{ log: '*', response: '*' , request: '*'}]
+      events: { log: '*', response: '*' }
+    }, 
+    {
+      reporter: 'good-http',
+      events: { log: '*', error: '*' },
+      config: {
+        endpoint: 'http://prod.logs:3000',
+        wreck: {
+            headers: { 'x-api-key' : 12345 }
+        }
+      }
     }]
   }
 };
+
+server.register(require('hapi-auth-jwt'), function () {
+  server.auth.strategy('token', 'jwt', { key: config.pk,  validateFunc: validate });
+});
 
 // Register the default route that will dump the index file
 server.route({

@@ -26,7 +26,8 @@
     "good": "latest",
     "good-console": "latest",
     "hapi": "latest",
-    "mongodb": "^2.0.33"
+    "mongodb": "^2.0.33",
+    "hapi-auth-cookie": "~1.3.1"
   },
   "devDependencies": {
     "bower": "latest",
