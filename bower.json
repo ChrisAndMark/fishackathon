@@ -1,0 +1,30 @@
+{
+  "name": "susy",
+  "version": "0.0.0",
+  "authors": [
+    "Mark Niehe <mark.niehe@canucks.com>"
+  ],
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/js",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "compass-breakpoint": "~2.5.0",
+    "jquery": "latest",
+    "angular-ui-router": "latest",
+    "underscore": "~1.8.2",
+    "susy": "~2.2.3",
+    "normalize.css": "~3.0.3",
+    "angular-loading-bar": "~0.7.1",
+    "angular": "1.4.0-rc.1",
+    "angular-cookies": "1.4.0-rc.1"
+  }
+}

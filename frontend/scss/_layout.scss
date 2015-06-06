@@ -1,0 +1,102 @@
+main {
+  @include breakpoint($phone) {
+    width: $phone;
+    margin: 0 auto;
+  }
+
+  @include breakpoint($tablet) {
+    width: $tablet;
+  }
+
+  @include breakpoint($desktop) {
+    width: $desktop;
+  }
+
+  > header {
+    @include full;
+    height: 97px;
+
+    > img {
+      @include span(3);
+      width: 87px;
+      vertical-align: middle;
+    }
+
+    > h1 {
+      @include span(7);
+    }
+
+    > div {
+      @include span(2 at 11);
+
+      > img {
+        @include full;
+      }
+    }
+  }
+
+  > nav {
+    display: none;
+  }
+
+  > section {
+    @include full;
+  }
+
+  > section.splash {
+
+  }
+
+  > section.three-item {
+    > header {
+      @include full;
+
+      > h3 {
+        text-align: center;
+      }
+    }
+
+    > div.body {
+      > div {
+        @include span(4);
+
+        > h4 {
+          text-align: center;
+          margin-bottom: 0px;
+        }
+
+        > p.byline {
+          font-style: italic;
+          margin-top: 0px !important;
+        }
+
+        > p {
+          margin-top: 10px;
+          text-align: center;
+        }
+
+        > button {
+
+        }
+      }
+
+      > div:last-of-type {
+        @include last;
+      }
+    }
+
+    > footer {
+      @include full;
+    }
+  }
+
+  > section#seat-exchange {
+    > div {
+      @include span(6);
+    }
+
+    > div:last-of-type {
+      @include last;
+    }
+  }
+}
