@@ -54,6 +54,7 @@ var vesselSchema = new Schema({
   vname          : { type: String, required: true, trim: true }, 
   vstateregno    : { type: Number, min: 100, max: 99999999 },
   vcommercialno  : { type: Number, min: 100, max: 999999 }, 
+  fisheryIdNo    : { type: Number, min: 100, max: 999, required: true}, 
   claims         : [ claimSchema ]
 });
 
@@ -67,7 +68,6 @@ var userSchema = new Schema({
   city          : { type: String, required: true, trim: true}, 
   state         : { type: String, required: true, trim: true}, 
   zip           : { type: Number, min: 10000, max: 99999, required: true}, 
-  fisheryIdNo   : { type: Number, min: 100, max: 999, required: true}, 
   vessels       : [vesselSchema],
   session       : { type: String, required: false }
 });
@@ -110,12 +110,12 @@ claimSchema.set('autoIndex', false)
 userSchema.set('autoIndex', false);
 
 
-var user = Mongoose.model('user', userSchema);
-var vessel = Mongoose.model('vessel', vesselSchema)
-var claims = Mongoose.model('claims', claimSchema)
+var user = Mongoose.model('user', userSchema, 'user');
+var vessel = Mongoose.model('vessel', vesselSchema, 'vessel')
+var claim = Mongoose.model('claims', claimSchema, 'claim')
 
 module.exports = {
   User: user,
   Vessel: vessel, 
-  Claims: claims
+  Claims: claim
 };

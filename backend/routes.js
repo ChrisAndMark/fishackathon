@@ -1,7 +1,8 @@
 var Boom = require('boom');
 var User   = require('./model').User;
 var config = require('../config/config')
-var userRoutes = require('./controllers/user.js')
+var userRoutes = require('./controllers/user')
+var vesselRoutes = require('./controllers/vessel')
 var jwt = require('jsonwebtoken');
 
 var routes = [
@@ -48,7 +49,9 @@ var routes = [
 ];
 routes.push(userRoutes.createUser);
 routes.push(userRoutes.updateUser);
+routes.push(vesselRoutes.createVessel);
+routes.push(vesselRoutes.updateVessel);
+routes.push(vesselRoutes.getVessels);
 
-
-
+console.log(routes)
 module.exports = routes;

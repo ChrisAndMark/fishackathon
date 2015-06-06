@@ -1,5 +1,5 @@
 User = require('../model').User
-
+helper = require('../lib/helper')
 var createUser = {
   method  : 'POST',
   path    : '/api/v1/user',
@@ -13,7 +13,6 @@ var createUser = {
     user.city = request.payload.city;
     user.state = request.payload.state;
     user.zip = parseInt(request.payload.zip);
-    user.fisheryIdNo = parseInt(request.payload.fisher_id_number); 
     user.save(function (err) {
       if (!err) {
 
@@ -34,8 +33,9 @@ var updateUser = {
     }
   },
   handler : function (request, reply){
-    console.log(request.headers)
-    reply(jwt.decode(request.headers))
+    console.log(request.auth.credentials)
+
+    reply(request.auth.credentials)
   }
 };
 
