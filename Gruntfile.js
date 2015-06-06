@@ -276,7 +276,6 @@ module.exports = function(grunt) {
     'ngtemplates',
     'concat:dev',
     'imagemin',
-    'browserSync',
     'watch'
   ]);
 
