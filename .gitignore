@@ -192,3 +192,5 @@ crashlytics-build.properties
 .vagrant/
 
 public/
+
+data/
