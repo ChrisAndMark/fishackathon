@@ -25,7 +25,8 @@
     "boom": "latest",
     "good": "latest",
     "good-console": "latest",
-    "hapi": "latest"
+    "hapi": "latest",
+    "mongodb": "^2.0.33"
   },
   "devDependencies": {
     "bower": "latest",
