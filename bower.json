@@ -24,7 +24,7 @@
     "susy": "~2.2.3",
     "normalize.css": "~3.0.3",
     "angular-loading-bar": "~0.7.1",
-    "angular": "1.4.0-rc.1",
-    "angular-cookies": "1.4.0-rc.1"
+    "angular": "1.4.0-rc.2",
+    "angular-cookies": "1.4.0-rc.2"
   }
 }
