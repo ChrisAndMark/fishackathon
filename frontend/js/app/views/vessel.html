@@ -1,0 +1,21 @@
+<section id="vessel">
+	<form ng-submit="newVessel.submit()">
+		<div>
+			<label for="vesselName">Name</label>
+			<input type="text" name="vesselName" ng-model="newVessel.vessel.vname">
+		</div>
+		<div>
+			<label for="registryNo">Registry Number</label>
+			<input type="text" name="registryNo" ng-model="newVessel.vessel.vstateregno">
+		</div>
+		<div>
+			<label for="vesselNo">Vessel Number</label>
+			<input type="text" name="vesselNo" ng-model="newVessel.vessel.vcommercialno">
+		</div>
+		<div>
+			<label for="fisherID">Fishery ID</label>
+			<input type="text" name="fisherID" ng-model="newVessel.vessel.fisheryIdNo">
+		</div>							
+		<button type="submit">Add</button>
+	</form>
+</section>

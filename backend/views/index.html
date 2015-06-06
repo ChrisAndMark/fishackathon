@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="SeaSharp">
+<html lang="en" ng-app="SeaScape">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -7,9 +7,11 @@
   <link rel="apple-touch-icon" href="favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="stylesheet" href="/css/style.css">
-  <title>A TITLE</title>
+  <title ng-bind="title">A TITLE</title>
 </head>
 <body>
+  <nav ui-view="nav"></nav>
+  <main ui-view="main"></main> 
 
   <script src="/js/main.js"></script>
 

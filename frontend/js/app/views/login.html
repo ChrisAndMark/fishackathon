@@ -1,0 +1,12 @@
+<form ng-submit="login.submit()">
+	<div>
+		<label for="email">Email</label>
+		<input type="text" name="email" ng-model="login.email">
+	</div>
+	<div>
+		<label for="password">Password</label>
+		<input type="password" name="password" ng-model="login.pass">
+	</div>
+	<button>Login</button>
+</form>
+<p>Haven't created an account? <a ui-sref="notLogged.register">Regster here</a>.</p>

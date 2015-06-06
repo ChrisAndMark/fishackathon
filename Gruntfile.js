@@ -15,7 +15,7 @@ module.exports = function(grunt) {
           'bower_components/angular/angular.js',
           'bower_components/angular-cookies/angular-cookies.js',
           'bower_components/angular-ui-router/release/angular-ui-router.js',
-          'bower_components/angular-loading-bar/loading-bar.js',  
+          'bower_components/angular-loading-bar/src/loading-bar.js',
           'frontend/js/vendor/**/*.js',
 
           // Add the front end app
@@ -40,7 +40,7 @@ module.exports = function(grunt) {
           'bower_components/angular/angular.js',
           'bower_components/angular-cookies/angular-cookies.js',
           'bower_components/angular-ui-router/release/angular-ui-router.js',
-          'bower_components/angular-loading-bar/loading-bar.js',          
+          'bower_components/angular-loading-bar/src/loading-bar.js',
           'frontend/js/vendor/**/*.js',
 
           // Add the front end app
@@ -87,7 +87,8 @@ module.exports = function(grunt) {
         includePaths: [
           'bower_components/susy/sass',
           'bower_components/compass-breakpoint/stylesheets',  
-          'bower_components/compass-mixins/lib'          
+          'bower_components/compass-mixins/lib',
+          'bower_components/materialize/sass'     
         ]
       },
       
@@ -138,7 +139,7 @@ module.exports = function(grunt) {
 
         // Set the module to the module name that you want your templates injected into
         options: {
-          module: 'feedManager',
+          module: 'SeaScape',
           htmlmin: {
             collapseBooleanAttributes:      true,
             collapseWhitespace:             true,
@@ -194,24 +195,7 @@ module.exports = function(grunt) {
           src: ['backend/**/*.js']
         }
       }
-    },
-    
-    browserSync: {
-        dev: {
-            bsFiles: {
-                src : './tmp/**/*'
-            },
-            options: {
-                proxy: 'localhost:8080',
-                watchTask: true,
-                online: false,
-                tunnel: true,
-                ui: {
-                  port: 8000
-                }
-            }
-        }
-    },    
+    }, 
 
     copy: {
       frontend_assets: {

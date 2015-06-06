@@ -18,7 +18,7 @@ Mongoose.connect(config.mongoUri, function(err, resp){
 // Create a server with a host and port
 var server = new Hapi.Server();
 server.connection({
-    host: '0.0.0.0',
+    host: '127.0.0.1',
     port: process.env.PORT || 3000
 });
 

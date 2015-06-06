@@ -26,5 +26,8 @@
     "angular-loading-bar": "~0.7.1",
     "angular": "1.4.0-rc.2",
     "angular-cookies": "1.4.0-rc.2"
+  },
+  "dependencies": {
+    "materialize": "~0.96.1"
   }
 }
