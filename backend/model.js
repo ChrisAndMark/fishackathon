@@ -37,7 +37,7 @@ var injury_codes = [
 var speciesSchema = new Schema({
   scode         : { type: String, required: true, enum: species_codes },
   injurycode    : { type: String, required: true, enum: injury_codes }, 
-  numinjured    : { type: Number, min: 1, required: true }
+  numInjured    : { type: Number, min: 1, required: true }
 });
 
 var claimSchema = new Schema ({
@@ -115,11 +115,12 @@ userSchema.set('autoIndex', false);
 
 var user = Mongoose.model('user', userSchema, 'user');
 var vessel = Mongoose.model('vessel', vesselSchema, 'vessel')
-var claim = Mongoose.model('claims', claimSchema, 'claim')
+var claim = Mongoose.model('claim', claimSchema, 'claim')
 var species = Mongoose.model('species', speciesSchema, 'species' ) 
 
 module.exports = {
   User: user,
   Vessel: vessel, 
-  Claims: claim
+  Claims: claim,
+  Species: species
 };

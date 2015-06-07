@@ -3,6 +3,7 @@ var User   = require('./model').User;
 var config = require('../config/config')
 var userRoutes = require('./controllers/user')
 var vesselRoutes = require('./controllers/vessel')
+var claimRoutes = require('./controllers/claim')
 var jwt = require('jsonwebtoken');
 
 var routes = [
@@ -47,12 +48,14 @@ var routes = [
 
   }
 ];
+routes.push(userRoutes.getUser);
 routes.push(userRoutes.createUser);
 routes.push(userRoutes.updateUser);
 routes.push(vesselRoutes.createVessel);
 routes.push(vesselRoutes.updateVessel);
 routes.push(vesselRoutes.getVessels);
-routes.push(userRoutes.getUser);
+routes.push(vesselRoutes.getVessel)
+routes.push(claimRoutes.createClaim)
 
 console.log(routes)
 module.exports = routes;

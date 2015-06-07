@@ -2,6 +2,7 @@ Vessel = require('../model').Vessel
 User = require('../model').User
 Claims = require('../model').Claims
 Species = require('../model').Species
+boom = require('boom')
 helper = require('../lib/helper')
 var _ = require('lodash');
 
@@ -14,45 +15,44 @@ var createClaim = {
     }
   },
   handler : function (request, reply) {
-
-    User.findOne({email: request.auth.credentials.user}, function(err, user) {
-      
-      speciesPayload = request.payload.species;
+   User.findOne({email: request.auth.credentials.user}, function(err, user){
+      jsonPost = JSON.parse(request.payload);
       species = []
+      _(jsonPost.species).forEach(function(n) {
+        var spec = new Species(); 
 
-      _(speciesPayload).forEach(function(n) {
-        var spec = new
+        spec.scode= n.species_code; 
+        spec.injurycode = n.injury_code;
+        spec.numInjured = n.number_inj;
 
-      }
-
+        species.push(spec); 
+      }).value();
+      vessel = user.vessels.id(jsonPost.vessel_id)
 
       var claim = new Claims(); 
-      claim.fisherygear = request.payload.fishing_gear;
-      claim.targetSpecies = request.payload.targetSpecies;
-      claim.datetime = request.payload.date_time; 
-      claim.loc_long = request.payload.longtitude; 
-      claim.loc_lat = request.payload.latitude; 
-      claim.species = 
-      claim.notes = request.payload.notes   
-
-     
-
-
-
-      console.log(user);
-      user.vessels.push(vessel);
-      vessel.save(function (err) {
-        if (!err) {
-
-            reply(vessel).created('/vessel/' + vessel._id);    // HTTP 201
-        } else {
-            console.log(err); // HTTP 403
-            reply(err);
+      claim.fisherygear = jsonPost.fishing_gear;
+      claim.targetSpecies = jsonPost.target_species;
+      claim.datetime = jsonPost.date_time; 
+      claim.loc_long = jsonPost.longtitude; 
+      claim.loc_lat = jsonPost.latitude; 
+      claim.notes = jsonPost.notes;   
+      claim.species = species;
+      claim.type = jsonPost.type;
+      vessel.claims.push(claim);
+      user.save(function (err) {
+        if (err) {
+          if(err.name == "ValidationError"){
+            return reply(boom.create(422, "Data Validation",  { timestamp: Date.now() }));
+          } else {
+            return reply(err);
+          }
         }
       })
+     reply(user)
     })
   }
 };
+
 var updateClaim = {
   method  : ['POST', 'PUT'],
   path    : '/api/v1/claim/update',
@@ -63,7 +63,7 @@ var updateClaim = {
   },
   handler : function (request, reply){
 
-    reply('yooooo')
+    reply('Not implemented')
   }
 };
 
