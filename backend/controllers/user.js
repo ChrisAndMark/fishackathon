@@ -1,5 +1,4 @@
 User = require('../model').User
-helper = require('../lib/helper')
 var boom = require('boom');
 
 //Creates a user...
