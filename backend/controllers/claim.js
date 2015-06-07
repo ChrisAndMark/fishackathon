@@ -3,7 +3,6 @@ User = require('../model').User
 Claims = require('../model').Claims
 Species = require('../model').Species
 boom = require('boom')
-helper = require('../lib/helper')
 var _ = require('lodash');
 
 var createClaim = {

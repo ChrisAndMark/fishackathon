@@ -1,6 +1,5 @@
 Vessel = require('../model').Vessel
 User = require('../model').User
-helper = require('../lib/helper')
 
 var createVessel = {
   method  : 'POST',
