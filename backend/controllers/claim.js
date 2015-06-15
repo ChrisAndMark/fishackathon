@@ -1,8 +1,8 @@
-Vessel = require('../model').Vessel
-User = require('../model').User
-Claims = require('../model').Claims
-Species = require('../model').Species
-boom = require('boom')
+Vessel = require('../model').Vessel;
+User = require('../model').User;
+Claims = require('../model').Claims;
+Species = require('../model').Species;
+boom = require('boom');
 var _ = require('lodash');
 
 var createClaim = {
@@ -16,25 +16,25 @@ var createClaim = {
   handler : function (request, reply) {
    User.findOne({email: request.auth.credentials.user}, function(err, user){
       jsonPost = JSON.parse(request.payload);
-      species = []
+      species = [];
       _(jsonPost.species).forEach(function(n) {
-        var spec = new Species(); 
+        var spec = new Species();
 
-        spec.scode= n.species_code; 
+        spec.scode= n.species_code;
         spec.injurycode = n.injury_code;
         spec.numInjured = n.number_inj;
 
-        species.push(spec); 
+        species.push(spec);
       }).value();
-      vessel = user.vessels.id(jsonPost.vessel_id)
+      vessel = user.vessels.id(jsonPost.vessel_id);
 
-      var claim = new Claims(); 
+      var claim = new Claims();
       claim.fisherygear = jsonPost.fishing_gear;
       claim.targetSpecies = jsonPost.target_species;
-      claim.datetime = jsonPost.date_time; 
-      claim.loc_long = jsonPost.longtitude; 
-      claim.loc_lat = jsonPost.latitude; 
-      claim.notes = jsonPost.notes;   
+      claim.datetime = jsonPost.date_time;
+      claim.loc_long = jsonPost.longtitude;
+      claim.loc_lat = jsonPost.latitude;
+      claim.notes = jsonPost.notes;
       claim.species = species;
       claim.type = jsonPost.type;
       vessel.claims.push(claim);

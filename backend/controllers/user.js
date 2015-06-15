@@ -1,4 +1,4 @@
-User = require('../model').User
+User = require('../model').User;
 var boom = require('boom');
 
 //Creates a user...
@@ -8,23 +8,23 @@ var createUser = {
   handler : function (request, reply) {
     var user = new User();
     user.email = request.payload.email;
-    user.password = request.payload.password; 
+    user.password = request.payload.password;
     user.fname = request.payload.first_name;
     user.lname = request.payload.last_name;
     user.address = request.payload.addr;
     user.city = request.payload.city;
     user.state = request.payload.state;
-    user.zip = parseInt(request.payload.zip);
-    user.save(function (err) {
+    user.zip = parseInt(request.payload.zip, 10);
+    user.save(function (err){
       if (!err) {
-        reply(user).created('/user/' + user._id);    // HTTP 201
+        reply();
       } else {
         console.log(err); // HTTP 403
         if(err.name == "ValidationError"){
-          reply(boom.create(422, "Email already exists",  { timestamp: Date.now() }));
+          reply(boom.create(422, "Data Validation Error",  { timestamp: Date.now() }));
         }
       }
-    })
+    });
   }
 };
 
@@ -37,7 +37,26 @@ var updateUser = {
     }
   },
   handler : function (request, reply){
-    reply(request.auth.credentials)
+    User.findOne({email: request.auth.credentials.user}, function(err, user){
+      user.email = request.payload.email;
+      user.password = request.payload.password;
+      user.fname = request.payload.first_name;
+      user.lname = request.payload.last_name;
+      user.address = request.payload.addr;
+      user.city = request.payload.city;
+      user.state = request.payload.state;
+      user.zip = parseInt(request.payload.zip, 10) ;
+      user.save(function (err) {
+        if (!err) {
+          reply();
+        } else {
+          console.log(err); // HTTP 403
+          if(err.name == "ValidationError"){
+            reply(boom.create(422, "Data Validation Error",  { timestamp: Date.now() }));
+          }
+        }
+      });
+    });
   }
 };
 
@@ -58,10 +77,22 @@ var getUser = {
       delete user_object.__v;
       delete user_object.vessels;
       reply(user_object);
+    });
+  }
+};
+
+var userExist = {
+  method  : 'GET',
+  path    : '/api/v1/user/{id?}',
+  handler : function (request, reply){
+    if (request.params.id){
+      User.id(request.params.id);
+      
     }
-  )}
+    reply(boom.badRequest("No id passed"));
+  }
 };
 
 
 
-module.exports = {createUser: createUser, updateUser: updateUser, getUser: getUser}
+module.exports = {createUser: createUser, updateUser: updateUser, getUser: getUser, updateUser: updateUser};

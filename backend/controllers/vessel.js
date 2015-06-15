@@ -1,5 +1,5 @@
-Vessel = require('../model').Vessel
-User = require('../model').User
+Vessel = require('../model').Vessel;
+User = require('../model').User; 
 
 var createVessel = {
   method  : 'POST',
@@ -12,23 +12,26 @@ var createVessel = {
   handler : function (request, reply) {
     User.findOne({email: request.auth.credentials.user}, function(err, user) {
       var vessel = new Vessel();
-      vessel.vname = request.payload.vessel_name; 
-      vessel.vstateregno = request.payload.vessel_registry_num; 
+      vessel.vname = request.payload.vessel_name;   
+      vessel.vstateregno = request.payload.vessel_registry_num;
       vessel.vcommercialno = request.payload.vessel_comm_num;
-      vessel.fisheryIdNo  = request.payload.fisher_id_number; 
+      vessel.fisheryIdNo  = request.payload.fisher_id_number;  
       user.vessels.push(vessel);
       user.save(function (err) {
         if (!err) {
 
-            reply(vessel).created('/vessel/' + vessel._id);    // HTTP 201
+          reply(vessel).created('/vessel/' + vessel._id);    // HTTP 201
         } else {
-            console.log(err); // HTTP 403
-            reply(err);
+          console.log(err); // HTTP 403
+          if(err.name == "ValidationError"){
+            reply(boom.create(422, "Data Validation Error",  { timestamp: Date.now() }));
+          }
         }
-      })
-    })
+      });
+    });
   }
 };
+
 var updateVessel = {
   method  : ['POST', 'PUT'],
   path    : '/api/v1/vessel/update',
@@ -39,7 +42,7 @@ var updateVessel = {
   },
   handler : function (request, reply){
 
-    reply('yooooo')
+    reply('yooooo');
   }
 };
 
@@ -52,11 +55,11 @@ var getVessels = {
     }
   },
   handler : function (request, reply){
-    user = User.findOne({email: request.auth.credentials.user})
-    user.select("-vessels.claims")
-    user.exec(function (err, user){ 
+    user = User.findOne({email: request.auth.credentials.user});
+    user.select("-vessels.claims");
+    user.exec(function (err, user){
       reply(user.vessels);
-    })
+    });
   }
 };
 
@@ -70,22 +73,23 @@ var getVessel= {
   },
   handler : function (request, reply){
     if (request.params.id){
-      user = User.findOne({email: request.auth.credentials.user})
-      user.select("-vessels.claims")
-      user.exec(function (err, user){ 
+      user = User.findOne({email: request.auth.credentials.user});
+      user.select("-vessels.claims");
+      user.exec(function (err, user){
         reply(user.vessels.id(request.params.id));
-      })
+      });
     }else{
-      reply("no id provided")
-    } 
+      reply("no id provided");
+    }
   }
 };
 
 
 module.exports = {
-  createVessel: createVessel, 
-  updateVessel: updateVessel, 
-  getVessels: getVessels, 
-  getVessel : getVessel}
+  createVessel: createVessel,
+  updateVessel: updateVessel,
+  getVessels: getVessels,
+  getVessel : getVessel
+};
 
 
