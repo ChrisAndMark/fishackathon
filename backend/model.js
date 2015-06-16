@@ -6,8 +6,8 @@ var uniqueValidator = require('mongoose-unique-validator');
 var SALT_WORK_FACTOR = 10;
 
 
-var species_codes = [ 
-  "100- Steller (northern) sea lion","101- California sea lion","105- Northern (Pribilof) fur seal","115- Harbor seal","116- Spotted seal", 
+var species_codes = [
+  "100- Steller (northern) sea lion","101- California sea lion","105- Northern (Pribilof) fur seal","115- Harbor seal","116- Spotted seal",
   "117- Ringed seal","121- Ribbon seal","124- Gray seal","127- Hawaiian monk seal","129- Northern elephant seal","130- Bearded seal","131- Harp seal",
   "132- Hooded seal (porpoise or dolphin)","203- Unidentified sea lion", "204- Unidentified seal","205- Unidentified pinniped",
   "047- Atlantic white-sided dolphin","049- Pacific white-sided dolphin","053- Common dolphin","054- Bottlenose dolphin", "055- Grampus (Risso’s) dolphin",
@@ -21,22 +21,22 @@ var injury_codes = [
   "01 - Visible blood flow",
   "02- Loss of/damage to appendage/jaw",
   "03- Inability to use appendage(s)",
-  "04- Asymmetry in shape of body or body position", 
-  "05- Any noticeable swelling or hemorrhage (bruising)", 
-  "06- Laceration (deep cut)",   
-  "07- Rupture or puncture of eyeball", 
+  "04- Asymmetry in shape of body or body position",
+  "05- Any noticeable swelling or hemorrhage (bruising)",
+  "06- Laceration (deep cut)",
+  "07- Rupture or puncture of eyeball",
   "08- Listlessness or inability to defend",
   "09- Inability to swim or dive",
   "10- Equilibrium imbalance",
   "11- Ingestion of gear",
   "12- Released trailing gear/gear perforating body",
   "13- Other wound or injury",
-  "14- Killed" 
+  "14- Killed"
 ];
 
 var speciesSchema = new Schema({
   scode         : { type: String, required: true, enum: species_codes },
-  injurycode    : { type: String, required: true, enum: injury_codes }, 
+  injurycode    : { type: String, required: true, enum: injury_codes },
   numInjured    : { type: Number, min: 1, required: true }
 });
 
@@ -52,10 +52,10 @@ var claimSchema = new Schema ({
 });
 
 var vesselSchema = new Schema({
-  vname          : { type: String, required: true, trim: true }, 
+  vname          : { type: String, required: true, trim: true },
   vstateregno    : { type: Number, min: 100, max: 99999999 },
-  vcommercialno  : { type: Number, min: 100, max: 999999 }, 
-  fisheryIdNo    : { type: Number, min: 100, max: 999, required: true}, 
+  vcommercialno  : { type: Number, min: 100, max: 999999 },
+  fisheryIdNo    : { type: Number, min: 100, max: 999, required: true},
   claims         : [ claimSchema ]
 });
 
@@ -64,11 +64,11 @@ var userSchema = new Schema({
   email         : { type: String, required: true, unique: true, validate: [ validator.isEmail, 'invalid email' ]  },
   password      : { type: String, required: true },
   fname         : { type: String, required: true, trim: true },
-  lname         : { type: String, required: true, trim: true}, 
-  address       : { type: String, required: true, trim: true}, 
-  city          : { type: String, required: true, trim: true}, 
-  state         : { type: String, required: true, trim: true}, 
-  zip           : { type: Number, min: 10000, max: 99999, required: true}, 
+  lname         : { type: String, required: true, trim: true},
+  address       : { type: String, required: true, trim: true},
+  city          : { type: String, required: true, trim: true},
+  state         : { type: String, required: true, trim: true},
+  zip           : { type: Number, min: 10000, max: 99999, required: true},
   vessels       : [vesselSchema],
   session       : { type: String, required: false }
 });
@@ -107,20 +107,20 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
 
 
 //Removing autoindexing for prod
-vesselSchema.set('autoIndex', false)
-speciesSchema.set('autoIndex', false)
-claimSchema.set('autoIndex', false)
+vesselSchema.set('autoIndex', false);
+speciesSchema.set('autoIndex', false);
+claimSchema.set('autoIndex', false);
 userSchema.set('autoIndex', false);
 
 
 var user = Mongoose.model('user', userSchema, 'user');
-var vessel = Mongoose.model('vessel', vesselSchema, 'vessel')
-var claim = Mongoose.model('claim', claimSchema, 'claim')
-var species = Mongoose.model('species', speciesSchema, 'species' ) 
+var vessel = Mongoose.model('vessel', vesselSchema, 'vessel');
+var claim = Mongoose.model('claim', claimSchema, 'claim');
+var species = Mongoose.model('species', speciesSchema, 'species');
 
 module.exports = {
   User: user,
-  Vessel: vessel, 
+  Vessel: vessel,
   Claims: claim,
   Species: species
 };

@@ -2,14 +2,16 @@ var User   = require('../model').User;
 
 var validate = function (decodedToken, callback) {
      // should be {accountId : 123}.
-    credentials = { user: decodedToken.toString() };
+  credentials = { user: decodedToken.toString() };
     console.log(decodedToken);
-
-    if (!credentials) {
+    User.findOne({email: decodedToken}, function(err, user){
+    if (user && !(user.session == null)){  
+      return callback(null, true, credentials);
+    } else {
       return callback(null, false);
     }
+  });
 
-    return callback(null, true, credentials);
 };
 
-module.exports = {validate : validate}
+module.exports = {validate : validate} 

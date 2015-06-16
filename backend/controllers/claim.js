@@ -14,7 +14,7 @@ var createClaim = {
     }
   },
   handler : function (request, reply) {
-   User.findOne({email: request.auth.credentials.user}, function(err, user){
+    User.findOne({email: request.auth.credentials.user}, function(err, user){
       jsonPost = JSON.parse(request.payload);
       species = [];
       _(jsonPost.species).forEach(function(n) {

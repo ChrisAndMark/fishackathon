@@ -30,7 +30,7 @@ var goodConfig = {
     reporters: [{
       reporter: require('good-console'),
       events: { log: '*', response: '*' }
-    }, 
+    },
     {
       reporter: 'good-http',
       events: { log: '*', error: '*' },
@@ -76,6 +76,9 @@ server.register(goodConfig, function(err) {
   if (err) {
     console.error(err);
   }
+});
+
+server.register({ register: require('lout') }, function(err) {
 });
 
 // Start the server
