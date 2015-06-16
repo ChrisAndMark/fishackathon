@@ -6,33 +6,9 @@ var uniqueValidator = require('mongoose-unique-validator');
 var SALT_WORK_FACTOR = 10;
 
 
-var species_codes = [
-  "100- Steller (northern) sea lion","101- California sea lion","105- Northern (Pribilof) fur seal","115- Harbor seal","116- Spotted seal",
-  "117- Ringed seal","121- Ribbon seal","124- Gray seal","127- Hawaiian monk seal","129- Northern elephant seal","130- Bearded seal","131- Harp seal",
-  "132- Hooded seal (porpoise or dolphin)","203- Unidentified sea lion", "204- Unidentified seal","205- Unidentified pinniped",
-  "047- Atlantic white-sided dolphin","049- Pacific white-sided dolphin","053- Common dolphin","054- Bottlenose dolphin", "055- Grampus (Risso’s) dolphin",
-   "058- Spotted dolphin","060- Spinner dolphin","061- Striped dolphin","063- Northern right whale dolphin","068- Harbor porpoise","072- Dall’s porpoise",
-   "002- North Atlantic right whale", "005- Gray whale","007- Fin whale", "010- Minke whale","011- Humpback whale","012- Sperm whale", "016- Beluga whale",
-  "038- False killer whale","039- Killer whale","221- Pilot whale","230- Beaked whale","235- Unidentified small cetacean", "231- Bryde’s whale","232- Dwarf sperm whale",
-  "210- Unidentified baleen whale","220- Unidentified toothed whale"
-];
 
-var injury_codes = [
-  "01 - Visible blood flow",
-  "02- Loss of/damage to appendage/jaw",
-  "03- Inability to use appendage(s)",
-  "04- Asymmetry in shape of body or body position",
-  "05- Any noticeable swelling or hemorrhage (bruising)",
-  "06- Laceration (deep cut)",
-  "07- Rupture or puncture of eyeball",
-  "08- Listlessness or inability to defend",
-  "09- Inability to swim or dive",
-  "10- Equilibrium imbalance",
-  "11- Ingestion of gear",
-  "12- Released trailing gear/gear perforating body",
-  "13- Other wound or injury",
-  "14- Killed"
-];
+var species_codes = ["100","101","105","115","116","117","121","124","127","129","130","131","132","203","204","205","047","049","053","054","055","058","060","061","063","068","072","002","005","007","010","011","012","016","038","039","221","230","235","231","232","210","220"];
+var injury_codes = ["01","02","03","04","05","06","07","08","09","10","11","12","13","14"];
 
 var speciesSchema = new Schema({
   scode         : { type: String, required: true, enum: species_codes },
@@ -117,7 +93,6 @@ var user = Mongoose.model('user', userSchema, 'user');
 var vessel = Mongoose.model('vessel', vesselSchema, 'vessel');
 var claim = Mongoose.model('claim', claimSchema, 'claim');
 var species = Mongoose.model('species', speciesSchema, 'species');
-
 module.exports = {
   User: user,
   Vessel: vessel,

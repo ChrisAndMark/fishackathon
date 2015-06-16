@@ -43,7 +43,7 @@ var updateUser = {
     auth : {
       strategy: 'token',
     },
-    description: 'User Updating', 
+    description: 'User Updating',
     notes: "Updates user based on the following parameters:\n" +
     "email, password, first_name, last_name, addr, city, state, zip. If any not provided then it fails",
     tags: ['api', 'user']
@@ -84,14 +84,19 @@ var getUser = {
     tags: ['api', 'user']
   },
   handler : function (request, reply){
-    User.findOne({email: request.auth.credentials.user}, function(err, user){
-      user_object = user.toObject();
-      delete user_object.password;
-      delete user_object.session;
-      delete user_object._id;
-      delete user_object.__v;
-      delete user_object.vessels;
-      reply(user_object);
+    user = User.findOne({email: request.auth.credentials.user});
+    // user.select("-vessels");
+    // user.select("-password");
+    // user.select("-session");
+    // user.select("-_id");
+    // user.select("-__v");
+    user.exec(function (err, user){
+      if(!err){
+        reply(user);
+      }else{
+        reply(boom.wrap(err));
+      }
+
     });
   }
 };
@@ -117,7 +122,7 @@ var userExist = {
     notes: 'Returns 200 if user does not exist or a 409 if a user does exit',
     tags: ['api', 'user']
   }
-}; 
+};
 
 var loginUser = {
     method : ['POST'],
@@ -165,9 +170,8 @@ var loginUser = {
             reply(boom.notFound());
           }
         });
-        console.log(user);
       });
-      reply("logged out").code(200)
+      reply("logged out").code(200);
     }
   };
 
@@ -177,8 +181,7 @@ module.exports = {
   createUser: createUser,
   updateUser: updateUser,
   getUser: getUser,
-  updateUser: updateUser,
-  userExist: userExist, 
+  userExist: userExist,
   loginUser: loginUser,
   logoutUser: logoutUser
 };

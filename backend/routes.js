@@ -18,7 +18,8 @@ routes.push(vesselRoutes.createVessel);
 routes.push(vesselRoutes.updateVessel);
 routes.push(vesselRoutes.getVessels);
 routes.push(vesselRoutes.getVessel);
-routes.push(claimRoutes.createClaim);
 
-console.log(routes);
+routes.push(claimRoutes.createClaim);
+routes.push(claimRoutes.updateClaim);
+
 module.exports = routes;

@@ -30,7 +30,7 @@ var goodConfig = {
     reporters: [{
       reporter: require('good-console'),
       events: { log: '*', response: '*' }
-    },
+    }, 
     {
       reporter: 'good-http',
       events: { log: '*', error: '*' },
