@@ -21,7 +21,7 @@ var createUser = {
       if (!err) {
         reply();
       } else {
-        console.log(err); // HTTP 403
+        //console.log(err); // HTTP 403
         if(err.name == "ValidationError"){
           reply(boom.create(422, "Data Validation Error",  { timestamp: Date.now() }));
         }

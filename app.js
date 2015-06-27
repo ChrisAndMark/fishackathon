@@ -5,13 +5,14 @@ var path        = require('path'),
     config      = require('./config/config'),
     validate    = require('./backend/lib/validate').validate,
     jwt         = require('jsonwebtoken'),
-    Mongoose    = require('mongoose');
+    Mongoose    = require('mongoose'),
+    isTest      = process.env.NODE_ENV === 'test';
 
 Mongoose.connect(config.mongoUri, function(err, resp){
   if (err) {
     console.log ('ERROR connecting to: ' + config.mongoUri + '. ' + err);
   } else {
-    console.log ('Succeeded connected to: ' + config.mongoUri);
+    if (!isTest) console.log ('Succeeded connected to: ' + config.mongoUri);
   }
 });
 
@@ -72,16 +73,25 @@ server.route({
 server.route(routes);
 
 // Register the Good config that we setup
-server.register(goodConfig, function(err) {
-  if (err) {
-    console.error(err);
-  }
-});
+if (!isTest) {
+  server.register(goodConfig, function(err) {
+    if (err) {
+      console.error(err);
+    }
+  });
+}
 
-server.register({ register: require('lout') }, function(err) {
-});
+if (!isTest) {
+  server.register({ register: require('lout') }, function(err) {
+  });
+}
 
 // Start the server
 server.start(function (err)  {
-  console.log("Server started at", server.info.uri);
+  if (!isTest) console.log("Server started at", server.info.uri);
 });
+
+module.exports = {
+  App: server,
+  Mongoose: Mongoose
+};
