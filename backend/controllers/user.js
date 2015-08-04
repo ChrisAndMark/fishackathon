@@ -1,5 +1,5 @@
 User = require('../model').User;
-var boom = require('boom');
+var Boom = require('boom');
 var jwt = require('jsonwebtoken');
 var config = require('../../config/config');
 
@@ -23,7 +23,7 @@ var createUser = {
       } else {
         //console.log(err); // HTTP 403
         if(err.name == "ValidationError"){
-          reply(boom.create(422, "Data Validation Error",  { timestamp: Date.now() }));
+          reply(Boom.create(422, "Data Validation Error",  { timestamp: Date.now() }));
         }
       }
     });
@@ -64,7 +64,7 @@ var updateUser = {
         } else {
           console.log(err); // HTTP 403
           if(err.name == "ValidationError"){
-            reply(boom.create(422, "Data Validation Error",  { timestamp: Date.now() }));
+            reply(Boom.create(422, "Data Validation Error",  { timestamp: Date.now() }));
           }
         }
       });
@@ -94,7 +94,7 @@ var getUser = {
       if(!err){
         reply(user);
       }else{
-        reply(boom.wrap(err));
+        reply(Boom.wrap(err));
       }
 
     });
@@ -108,13 +108,13 @@ var userExist = {
     if (request.params.email){
       User.count({email: decodeURIComponent(request.params.email)}, function(err, count){
         if(count > 0){
-          reply(boom.conflict('User Exists'));
+          reply(Boom.conflict('User Exists'));
         } else {
           reply();
         }
       });
     }else {
-      reply(boom.badRequest("No email passed"));
+      reply(Boom.badRequest("No email passed"));
     }
   },
   config: {
@@ -130,11 +130,15 @@ var loginUser = {
     handler : function(request, reply){
       User.findOne({ email: request.payload.username }, function(err, user) {
         if (err) throw err;
+
+        if (user === null) {
+          reply(Boom.unauthorized('Invalid username or password'));
+        }
         // test a matching password
         user.comparePassword(request.payload.pass, function(err, isMatch) {
           if (err) throw err;
           if (!isMatch){
-            reply(Boom.unauthorized('Invalid password'));
+            reply(Boom.unauthorized('Invalid username or password'));
           } else {
             var token = jwt.sign(user.email, config.pk);
             user.session = token;
@@ -167,7 +171,7 @@ var loginUser = {
         user.save(function(err){
           if(err){
             console.log(err);
-            reply(boom.notFound());
+            reply(Boom.notFound());
           }
         });
       });
